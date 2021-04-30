@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Select, MenuItem } from "@material-ui/core";
 
 function MainPage() {
+  const [region, setRegion] = useState("");
   return (
     <Select>
       <MenuItem value={"BR1"}>Brazil</MenuItem>
