@@ -1,11 +1,11 @@
 import React from "react";
 import Leaderboard from "./Leaderboard";
-import { Select } from "@material-ui/core";
+import RegionSelector from "./RegionSelector";
 
 function MainPage() {
   return (
     <div>
-      <Select />
+      <RegionSelector />
       <Leaderboard />
     </div>
   );
