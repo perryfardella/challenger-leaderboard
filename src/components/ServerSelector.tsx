@@ -54,7 +54,6 @@ function ServerSelector() {
         <MenuItem value={"RU"}>Russia</MenuItem>
         <MenuItem value={"TR1"}>Turkey</MenuItem>
       </Select>
-      {server}
     </FormControl>
   );
 }

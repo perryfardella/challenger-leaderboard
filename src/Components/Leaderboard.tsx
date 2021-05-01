@@ -3,7 +3,7 @@ import { apiKey } from "../api-key/API.key";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
 import { ServerActions } from "../redux/actions/serverActions";
-
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableHead,
@@ -13,15 +13,22 @@ import {
   TableBody,
 } from "@material-ui/core";
 
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+    width: "50%",
+  },
+});
+
 interface LeagueData {
   tier: string;
   leagueId: string;
   queue: string;
   name: string;
-  entries: PlayerData[];
+  entries: SummonerData[];
 }
 
-interface PlayerData {
+interface SummonerData {
   freshBlood: boolean;
   hotStreak: boolean;
   inactive: boolean;
@@ -35,29 +42,39 @@ interface PlayerData {
 }
 
 function Leaderboard() {
+  const classes = useStyles();
+
   const { server } = useSelector((state: AppState) => state.server);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
-  const [playerInfo, setPlayerInfo] = useState("");
-  const [numberPlayers, setNumberPlayers] = useState(0);
-  const [badRequest, setBadRequest] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [leagueInfo, setLeagueInfo] = useState<LeagueData | undefined>(
+    undefined
+  );
+  const [summonerInfo, setSummonerInfo] = useState<SummonerData[] | undefined>(
+    undefined
+  );
+  const [badRequest, setBadRequest] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  //use effect (function, array of values)
-  //when a value changes in the array, the function is re-run
+  var summonerRanking = 0;
 
-  // if server changes, fetch data
   useEffect(() => {
     if (server) {
       fetchPlayerInfo();
+      summonerRanking = 0;
     }
   }, [server]);
+
+  useEffect(() => {
+    if (leagueInfo) {
+      isolateSummonerData();
+    }
+  }, [leagueInfo]);
 
   async function fetchPlayerInfo() {
     setBadRequest(false);
     setLoading(true);
     const link: string = "/" + server;
     try {
-      // Insert API link below
       const response = await fetch(link, {
         headers: {
           "User-Agent":
@@ -71,32 +88,23 @@ function Leaderboard() {
       });
       const data = await response.json();
       console.log(data);
-      setPlayerInfo(data);
+      setLeagueInfo(data);
       setLoading(false);
-      isolatePlayerData();
     } catch (error) {
       console.log(error);
       setBadRequest(true);
-      setPlayerInfo("");
+      setLeagueInfo(undefined);
       setLoading(false);
     }
   }
 
-  function isolatePlayerData() {
-    const json = JSON.parse(playerInfo);
-    setPlayerInfo(json.entries);
-    console.log(playerInfo);
-  }
+  function isolateSummonerData() {
+    const data = leagueInfo!.entries;
+    data.sort(function (a, b) {
+      return b.leaguePoints - a.leaguePoints;
+    });
 
-  // Probably need to create an interface for the typescript data
-  function generateTableRow(summonerInfo: any) {
-    return (
-      <TableRow>
-        <TableCell>{"Rank Number"}</TableCell>
-        <TableCell>{summonerInfo.summonerName}</TableCell>
-        <TableCell>{summonerInfo.leaguePoints}</TableCell>
-      </TableRow>
-    );
+    setSummonerInfo(data);
   }
 
   return (
@@ -110,21 +118,18 @@ function Leaderboard() {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>1</TableCell>
-            <TableCell>A</TableCell>
-            <TableCell>500</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>2</TableCell>
-            <TableCell>B</TableCell>
-            <TableCell>400</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>3</TableCell>
-            <TableCell>C</TableCell>
-            <TableCell>300</TableCell>
-          </TableRow>
+          {summonerInfo
+            ? summonerInfo.map((x) => {
+                summonerRanking++;
+                return (
+                  <TableRow>
+                    <TableCell>{summonerRanking}</TableCell>
+                    <TableCell>{x.summonerName}</TableCell>
+                    <TableCell>{x.leaguePoints}</TableCell>
+                  </TableRow>
+                );
+              })
+            : ""}
         </TableBody>
       </Table>
     </TableContainer>
