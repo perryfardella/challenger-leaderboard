@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dispatch } from "react";
 import { apiKey } from "../api-key/API.key";
+import { useSelector, useDispatch } from "react-redux";
+import { AppState } from "../redux/reducers/rootReducer";
+import { ServerActions } from "../redux/actions/serverActions";
 
 import {
   Table,
@@ -11,6 +14,8 @@ import {
 } from "@material-ui/core";
 
 function Leaderboard() {
+  const { server } = useSelector((state: AppState) => state.server);
+  const serverDispatch = useDispatch<Dispatch<ServerActions>>();
   const [playerInfo, setPlayerInfo] = useState([]);
   const [badRequest, setBadRequest] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,7 +36,12 @@ function Leaderboard() {
     setLoading(true);
     try {
       // Insert API link below
-      const response = await fetch("API placeholder");
+      const response = await fetch(
+        "https://" +
+          server +
+          ".api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=" +
+          apiKey
+      );
       const data = await response.json();
       console.log(data);
       setPlayerInfo(data);
@@ -46,7 +56,6 @@ function Leaderboard() {
 
   return (
     <TableContainer>
-      {console.log(apiKey)}
       <Table>
         <TableHead>
           <TableRow>
