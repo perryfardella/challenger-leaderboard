@@ -1,69 +1,103 @@
-const proxy = require("http-proxy-middleware");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 module.exports = function (app) {
   app.use(
-    proxy("/OC1", {
+    createProxyMiddleware("/OC1", {
       target:
         "https://oc1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/OC1": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/BR1", {
+    createProxyMiddleware("/BR1", {
       target:
         "https://br1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      changeOrigin: true,
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/BR1": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/EUN1", {
+    createProxyMiddleware("/EUN1", {
       target:
         "https://eun1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/EUN1": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/EUW1", {
+    createProxyMiddleware("/EUW1", {
       target:
         "https://euw1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/EUW1": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/JP1", {
+    createProxyMiddleware("/JP1", {
       target:
         "https://jp1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/JP1": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/KR1", {
+    createProxyMiddleware("/KR1", {
       target:
         "https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/KR1": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/LA1", {
+    createProxyMiddleware("/LA1", {
       target:
         "https://la1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/LA1": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/LA2", {
+    createProxyMiddleware("/LA2", {
       target:
         "https://la2.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/LA2": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/NA1", {
+    createProxyMiddleware("/NA1", {
       target:
         "https://na1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/NA1": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/RU", {
+    createProxyMiddleware("/RU", {
       target:
         "https://ru.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/RU": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
-    proxy("/TR1", {
+    createProxyMiddleware("/TR1", {
       target:
         "https://tr1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
+      secure: "false",
+      changeOrigin: true,
+      pathRewrite: { "^/TR1": "" }, // remove leading text to match real API urls
     })
   );
 };

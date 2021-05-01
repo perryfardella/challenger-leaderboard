@@ -33,10 +33,7 @@ function Leaderboard() {
   async function fetchPlayerInfo() {
     setBadRequest(false);
     setLoading(true);
-    const link: string =
-      "https://" +
-      server +
-      ".api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5";
+    const link: string = "/" + server;
     try {
       // Insert API link below
       const response = await fetch(link, {
