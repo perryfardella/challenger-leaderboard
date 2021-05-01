@@ -1,6 +1,6 @@
 import React from "react";
 import Leaderboard from "./Leaderboard";
-import RegionSelector from "./RegionSelector";
+import RegionSelector from "./ServerSelector";
 
 function MainPage() {
   return (
