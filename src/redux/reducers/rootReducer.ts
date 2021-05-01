@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import countReducer from './countReducer'
+import dataLoadingReducer from './dataLoadingReducer'
 import serverReducer from './serverReducer';
 const rootReducer = combineReducers({
-    count: countReducer,
+    dataLoading: dataLoadingReducer,
     server: serverReducer,
 })
 export type AppState = ReturnType<typeof rootReducer>

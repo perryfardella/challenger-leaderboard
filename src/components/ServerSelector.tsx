@@ -4,7 +4,6 @@ import { AppState } from "../redux/reducers/rootReducer";
 import { ServerActions } from "../redux/actions/serverActions";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { apiKey } from "../api-key/API.key";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,9 +18,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function ServerSelector() {
-  const [playerInfo, setPlayerInfo] = useState([]);
-  const [badRequest, setBadRequest] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { server } = useSelector((state: AppState) => state.server);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
   const classes = useStyles();
