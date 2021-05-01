@@ -21,14 +21,10 @@ function ServerSelector() {
   const { server } = useSelector((state: AppState) => state.server);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
   const classes = useStyles();
-  // const [region, setRegion] = useState("");
 
-  // Need to determine and set correct type here for the parameter
   const handleRegionChange = (e: any) => {
     serverDispatch({ type: "SET_SERVER", payload: e.target.value });
   };
-
-  //empty array = component did mount, call on component mounting, only calls once
 
   return (
     <FormControl className={classes.formControl}>

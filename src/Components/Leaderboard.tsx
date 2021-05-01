@@ -3,6 +3,7 @@ import { apiKey } from "../api-key/API.key";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
 import { ServerActions } from "../redux/actions/serverActions";
+import { DataLoadingActions } from "../redux/actions/dataLoadingActions";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -46,6 +47,7 @@ function Leaderboard() {
 
   const { server } = useSelector((state: AppState) => state.server);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
+  const dataLoadingDispatch = useDispatch<Dispatch<DataLoadingActions>>();
   const [leagueInfo, setLeagueInfo] = useState<LeagueData | undefined>(
     undefined
   );
@@ -73,6 +75,7 @@ function Leaderboard() {
   async function fetchPlayerInfo() {
     setBadRequest(false);
     setLoading(true);
+    dataLoadingDispatch({ type: "SET_TRUE" });
     const link: string = "/" + server;
     try {
       const response = await fetch(link, {
@@ -90,11 +93,13 @@ function Leaderboard() {
       console.log(data);
       setLeagueInfo(data);
       setLoading(false);
+      dataLoadingDispatch({ type: "SET_FALSE" });
     } catch (error) {
       console.log(error);
       setBadRequest(true);
       setLeagueInfo(undefined);
       setLoading(false);
+      dataLoadingDispatch({ type: "SET_FALSE" });
     }
   }
 
