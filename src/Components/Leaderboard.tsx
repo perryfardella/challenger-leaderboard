@@ -55,7 +55,6 @@ function Leaderboard() {
     undefined
   );
   const [badRequest, setBadRequest] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
 
   var summonerRanking = 0;
 
@@ -74,7 +73,6 @@ function Leaderboard() {
 
   async function fetchPlayerInfo() {
     setBadRequest(false);
-    setLoading(true);
     dataLoadingDispatch({ type: "SET_TRUE" });
     const link: string = "/" + server;
     try {
@@ -92,13 +90,11 @@ function Leaderboard() {
       const data = await response.json();
       console.log(data);
       setLeagueInfo(data);
-      setLoading(false);
       dataLoadingDispatch({ type: "SET_FALSE" });
     } catch (error) {
       console.log(error);
       setBadRequest(true);
       setLeagueInfo(undefined);
-      setLoading(false);
       dataLoadingDispatch({ type: "SET_FALSE" });
     }
   }
