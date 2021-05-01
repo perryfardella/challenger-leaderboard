@@ -1,9 +1,10 @@
-import React, { useState, Dispatch } from "react";
+import React, { useState, useEffect, Dispatch } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
 import { ServerActions } from "../redux/actions/serverActions";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { apiKey } from "../api-key/API.key";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function ServerSelector() {
+  const [playerInfo, setPlayerInfo] = useState([]);
+  const [badRequest, setBadRequest] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { server } = useSelector((state: AppState) => state.server);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
   const classes = useStyles();
@@ -27,6 +31,8 @@ function ServerSelector() {
   const handleRegionChange = (e: any) => {
     serverDispatch({ type: "SET_SERVER", payload: e.target.value });
   };
+
+  //empty array = component did mount, call on component mounting, only calls once
 
   return (
     <FormControl className={classes.formControl}>

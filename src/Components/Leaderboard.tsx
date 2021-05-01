@@ -23,25 +23,33 @@ function Leaderboard() {
   //use effect (function, array of values)
   //when a value changes in the array, the function is re-run
 
-  // Need to pass info region
+  // if server changes, fetch data
   useEffect(() => {
-    fetchPlayerInfo();
-  }, []);
+    if (server) {
+      fetchPlayerInfo();
+    }
+  }, [server]);
 
-  //empty array = component did mount, call on component mounting, only calls once
-
-  // Takes region as parameter for the API key
   async function fetchPlayerInfo() {
     setBadRequest(false);
     setLoading(true);
+    const link: string =
+      "https://" +
+      server +
+      ".api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5";
     try {
       // Insert API link below
-      const response = await fetch(
-        "https://" +
-          server +
-          ".api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=" +
-          apiKey
-      );
+      const response = await fetch(link, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+          "Accept-Language":
+            "en-AU,en;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-GB;q=0.6,en-US;q=0.5",
+          "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
+          Origin: "https://developer.riotgames.com",
+          "X-Riot-Token": apiKey,
+        },
+      });
       const data = await response.json();
       console.log(data);
       setPlayerInfo(data);
