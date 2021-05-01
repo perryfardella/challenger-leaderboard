@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { apiKey } from "../api-key/API.key";
 
 import {
   Table,
@@ -45,6 +46,7 @@ function Leaderboard() {
 
   return (
     <TableContainer>
+      {console.log(apiKey)}
       <Table>
         <TableHead>
           <TableRow>
