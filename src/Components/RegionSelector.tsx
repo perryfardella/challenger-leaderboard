@@ -20,9 +20,13 @@ function MainPage() {
   return (
     <FormControl className={classes.formControl}>
       <InputLabel id="select-label">Server</InputLabel>
-      <Select labelId="select-label" value={region}>
+      <Select
+        labelId="select-label"
+        onChange={(e: any): void => setRegion(e.target.value)}
+        value={region ? region : ""}
+      >
         <MenuItem value={"BR1"}>Brazil</MenuItem>
-        <MenuItem value={"EUN1"}>Europe Nordic & East</MenuItem>
+        <MenuItem value={"EUN1"}>Europe Nordic And East</MenuItem>
         <MenuItem value={"EUW1"}>Europe West</MenuItem>
         <MenuItem value={"JP1"}>Japan</MenuItem>
         <MenuItem value={"KR"}>Korea</MenuItem>
