@@ -54,6 +54,7 @@ function Leaderboard() {
   const [summonerInfo, setSummonerInfo] = useState<SummonerData[] | undefined>(
     undefined
   );
+  //Probably need to use this for error handling
   const [badRequest, setBadRequest] = useState<boolean>(false);
 
   var summonerRanking = 0;
