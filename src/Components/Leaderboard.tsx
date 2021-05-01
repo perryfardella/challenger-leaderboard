@@ -13,10 +13,32 @@ import {
   TableBody,
 } from "@material-ui/core";
 
+interface LeagueData {
+  tier: string;
+  leagueId: string;
+  queue: string;
+  name: string;
+  entries: PlayerData[];
+}
+
+interface PlayerData {
+  freshBlood: boolean;
+  hotStreak: boolean;
+  inactive: boolean;
+  leaguePoints: number;
+  losses: number;
+  rank: string;
+  summonerId: string;
+  summonerName: string;
+  veteran: boolean;
+  wins: number;
+}
+
 function Leaderboard() {
   const { server } = useSelector((state: AppState) => state.server);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
-  const [playerInfo, setPlayerInfo] = useState([]);
+  const [playerInfo, setPlayerInfo] = useState("");
+  const [numberPlayers, setNumberPlayers] = useState(0);
   const [badRequest, setBadRequest] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -51,12 +73,30 @@ function Leaderboard() {
       console.log(data);
       setPlayerInfo(data);
       setLoading(false);
+      isolatePlayerData();
     } catch (error) {
       console.log(error);
       setBadRequest(true);
-      setPlayerInfo([]);
+      setPlayerInfo("");
       setLoading(false);
     }
+  }
+
+  function isolatePlayerData() {
+    const json = JSON.parse(playerInfo);
+    setPlayerInfo(json.entries);
+    console.log(playerInfo);
+  }
+
+  // Probably need to create an interface for the typescript data
+  function generateTableRow(summonerInfo: any) {
+    return (
+      <TableRow>
+        <TableCell>{"Rank Number"}</TableCell>
+        <TableCell>{summonerInfo.summonerName}</TableCell>
+        <TableCell>{summonerInfo.leaguePoints}</TableCell>
+      </TableRow>
+    );
   }
 
   return (

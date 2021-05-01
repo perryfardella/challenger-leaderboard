@@ -47,12 +47,12 @@ module.exports = function (app) {
     })
   );
   app.use(
-    createProxyMiddleware("/KR1", {
+    createProxyMiddleware("/KR", {
       target:
         "https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5",
       secure: "false",
       changeOrigin: true,
-      pathRewrite: { "^/KR1": "" }, // remove leading text to match real API urls
+      pathRewrite: { "^/KR": "" }, // remove leading text to match real API urls
     })
   );
   app.use(
