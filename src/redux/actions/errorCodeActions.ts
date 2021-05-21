@@ -1,9 +1,6 @@
-export interface ISetDataLoadingFalseAction {
-    readonly type: 'SET_FALSE';
+export interface ISetErrorCodeAction {
+    readonly type: 'SET_ERRORCODE';
+    payload: string;
 }
-export interface ISetDataLoadingTrueAction {
-    readonly type: 'SET_TRUE';
-}
-export type DataLoadingActions =
-| ISetDataLoadingFalseAction
-| ISetDataLoadingTrueAction
+export type ErrorCodeActions =
+| ISetErrorCodeAction

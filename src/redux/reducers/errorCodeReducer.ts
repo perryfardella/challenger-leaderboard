@@ -1,24 +1,19 @@
-import { DataLoadingActions } from "../actions/dataLoadingActions";
-type DataLoadingState = {
-    dataLoading: boolean;
+import { ErrorCodeActions } from "../actions/errorCodeActions"
+type ErrorCodeState = {
+errorCode: string;
 }
-const initialState: DataLoadingState = {
-    dataLoading: false,
+const initialState: ErrorCodeState = {
+errorCode: '',
 }
-const dataLoadingReducer = (state: DataLoadingState = initialState, action: DataLoadingActions) => {
+const ErrorCodeReducer = (state: ErrorCodeState = initialState, action: ErrorCodeActions) => {
     switch(action.type) {
-        case 'SET_FALSE':
+        case 'SET_ERRORCODE':
             return {
                 ...state,
-                dataLoading: false,
-            }
-        case 'SET_TRUE':
-            return {
-                ...state,
-                dataLoading: true,
+                server: action.payload,
             }
         default:
             return state;
     }
 }
-export default dataLoadingReducer;
+export default ErrorCodeReducer;
