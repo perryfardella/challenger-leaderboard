@@ -1,10 +1,8 @@
-import React, { Dispatch } from "react";
 import Leaderboard from "./Leaderboard";
 import RegionSelector from "./ServerSelector";
 
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
-import { DataLoadingActions } from "../redux/actions/dataLoadingActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
