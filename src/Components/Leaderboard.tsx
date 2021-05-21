@@ -46,14 +46,12 @@ function Leaderboard() {
   const classes = useStyles();
 
   const { server } = useSelector((state: AppState) => state.server);
-  const serverDispatch = useDispatch<Dispatch<ServerActions>>();
   const dataLoadingDispatch = useDispatch<Dispatch<DataLoadingActions>>();
-  const [leagueInfo, setLeagueInfo] = useState<LeagueData | undefined>(
-    undefined
-  );
-  const [summonerInfo, setSummonerInfo] = useState<SummonerData[] | undefined>(
-    undefined
-  );
+  const [leagueInfo, setLeagueInfo] =
+    useState<LeagueData | undefined>(undefined);
+  const [summonerInfo, setSummonerInfo] =
+    useState<SummonerData[] | undefined>(undefined);
+
   //Probably need to use this for error handling
   const [badRequest, setBadRequest] = useState<boolean>(false);
 
