@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function ServerSelector() {
+function FilterSelector() {
   const { server } = useSelector((state: AppState) => state.server);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
   const classes = useStyles();
@@ -45,20 +45,11 @@ function ServerSelector() {
           getContentAnchorEl: null,
         }}
       >
-        <MenuItem value={"BR1"}>Brazil</MenuItem>
-        <MenuItem value={"EUN1"}>Europe Nordic And East</MenuItem>
-        <MenuItem value={"EUW1"}>Europe West</MenuItem>
-        <MenuItem value={"JP1"}>Japan</MenuItem>
-        <MenuItem value={"KR"}>Korea</MenuItem>
-        <MenuItem value={"LA1"}>Latin America North</MenuItem>
-        <MenuItem value={"LA2"}>Latin America South</MenuItem>
-        <MenuItem value={"NA1"}>North America</MenuItem>
-        <MenuItem value={"OC1"}>Oceania</MenuItem>
-        <MenuItem value={"RU"}>Russia</MenuItem>
-        <MenuItem value={"TR1"}>Turkey</MenuItem>
+        <MenuItem value={"rank"}>Summoner Rank</MenuItem>
+        <MenuItem value={"name"}>Summoner Name</MenuItem>
       </Select>
     </FormControl>
   );
 }
 
-export default ServerSelector;
+export default FilterSelector;
