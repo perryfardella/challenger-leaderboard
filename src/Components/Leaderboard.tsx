@@ -12,6 +12,7 @@ import {
   TableCell,
   TableContainer,
   TableBody,
+  Typography,
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -47,10 +48,12 @@ function Leaderboard() {
 
   const { server } = useSelector((state: AppState) => state.server);
   const dataLoadingDispatch = useDispatch<Dispatch<DataLoadingActions>>();
-  const [leagueInfo, setLeagueInfo] =
-    useState<LeagueData | undefined>(undefined);
-  const [summonerInfo, setSummonerInfo] =
-    useState<SummonerData[] | undefined>(undefined);
+  const [leagueInfo, setLeagueInfo] = useState<LeagueData | undefined>(
+    undefined
+  );
+  const [summonerInfo, setSummonerInfo] = useState<SummonerData[] | undefined>(
+    undefined
+  );
 
   //Probably need to use this for error handling
   const [badRequest, setBadRequest] = useState<boolean>(false);
@@ -112,9 +115,15 @@ function Leaderboard() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Ranking</TableCell>
-            <TableCell>Summoner Name</TableCell>
-            <TableCell>League Points</TableCell>
+            <TableCell>
+              <Typography variant="h6">Ranking</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="h6">Summoner Name</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="h6">League Points</Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -123,9 +132,15 @@ function Leaderboard() {
                 summonerRanking++;
                 return (
                   <TableRow>
-                    <TableCell>{summonerRanking}</TableCell>
-                    <TableCell>{x.summonerName}</TableCell>
-                    <TableCell>{x.leaguePoints}</TableCell>
+                    <TableCell>
+                      <Typography variant="body1">{summonerRanking}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body1">{x.summonerName}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body1">{x.leaguePoints}</Typography>
+                    </TableCell>
                   </TableRow>
                 );
               })
