@@ -2,8 +2,11 @@ import React, { useState, useEffect, Dispatch } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
 import { ServerActions } from "../redux/actions/serverActions";
+import { DataLoadingActions } from "../redux/actions/dataLoadingActions";
+import { LeagueInfoActions } from "../redux/actions/leagueInfoActions";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { apiKey } from "../api-key/API.key";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,10 +23,44 @@ const useStyles = makeStyles((theme: Theme) =>
 function ServerSelector() {
   const { server } = useSelector((state: AppState) => state.server);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
+  const leagueInfoDispatch = useDispatch<Dispatch<LeagueInfoActions>>();
+  const { dataLoading } = useSelector((state: AppState) => state.dataLoading);
+  const dataLoadingDispatch = useDispatch<Dispatch<DataLoadingActions>>();
   const classes = useStyles();
+
+  async function fetchPlayerInfo() {
+    //setBadRequest(false);
+    dataLoadingDispatch({ type: "SET_TRUE" });
+    const link: string = "/" + server;
+    try {
+      const response = await fetch(link, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+          "Accept-Language":
+            "en-AU,en;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-GB;q=0.6,en-US;q=0.5",
+          "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
+          Origin: "https://developer.riotgames.com",
+          "X-Riot-Token": apiKey,
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      //setLeagueInfo(data);
+      leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: data });
+      dataLoadingDispatch({ type: "SET_FALSE" });
+    } catch (error) {
+      console.log(error);
+      //setBadRequest(true);
+      //setLeagueInfo(undefined);
+      //leagueInfoDispatch({}); NEED TO FIX
+      dataLoadingDispatch({ type: "SET_FALSE" });
+    }
+  }
 
   const handleRegionChange = (e: any) => {
     serverDispatch({ type: "SET_SERVER", payload: e.target.value });
+    fetchPlayerInfo();
   };
 
   return (

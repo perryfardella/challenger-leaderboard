@@ -1,9 +1,17 @@
 import { LeagueInfoActions } from "../actions/leagueInfoActions";
+import { LeagueData } from "../../interfaces";
+
 type LeagueInfoState = {
-  leagueinfo: any;
+  leagueInfo: LeagueData;
 };
 const initialState: LeagueInfoState = {
-  leagueinfo: {},
+  leagueInfo: {
+    tier: "",
+    leagueId: "",
+    queue: "",
+    name: "",
+    entries: [],
+  },
 };
 const LeagueInfoReducer = (
   state: LeagueInfoState = initialState,
@@ -13,7 +21,7 @@ const LeagueInfoReducer = (
     case "SET_LEAGUEINFO":
       return {
         ...state,
-        leagueinfo: action.payload,
+        leagueInfo: action.payload,
       };
     default:
       return state;

@@ -1,5 +1,7 @@
+import { LeagueData } from "../../interfaces";
+
 export interface ISetLeagueInfoAction {
   readonly type: "SET_LEAGUEINFO";
-  payload: string;
+  payload: LeagueData;
 }
 export type LeagueInfoActions = ISetLeagueInfoAction;
