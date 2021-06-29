@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Dispatch } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
-import { ServerActions } from "../redux/actions/serverActions";
+import { FilterActions } from "../redux/actions/filterActions";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
@@ -18,21 +18,21 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function FilterSelector() {
-  const { server } = useSelector((state: AppState) => state.server);
-  const serverDispatch = useDispatch<Dispatch<ServerActions>>();
+  const { filter } = useSelector((state: AppState) => state.filter);
+  const filterDispatch = useDispatch<Dispatch<FilterActions>>();
   const classes = useStyles();
 
-  const handleRegionChange = (e: any) => {
-    serverDispatch({ type: "SET_SERVER", payload: e.target.value });
+  const handleFilterChange = (e: any) => {
+    filterDispatch({ type: "SET_FILTER", payload: e.target.value });
   };
 
   return (
-    <FormControl className={classes.formControl}>
-      <InputLabel id="select-label">Server</InputLabel>
+    <FormControl className={classes.formControl} style={{ minWidth: 200 }}>
+      <InputLabel id="select-filter">Filter Results By</InputLabel>
       <Select
-        labelId="select-label"
-        onChange={handleRegionChange}
-        value={server ? server : ""}
+        labelId="select-filter"
+        onChange={handleFilterChange}
+        value={filter ? filter : ""}
         MenuProps={{
           anchorOrigin: {
             vertical: "bottom",

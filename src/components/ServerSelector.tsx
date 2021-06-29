@@ -28,9 +28,9 @@ function ServerSelector() {
 
   return (
     <FormControl className={classes.formControl}>
-      <InputLabel id="select-label">Server</InputLabel>
+      <InputLabel id="select-server">Server</InputLabel>
       <Select
-        labelId="select-label"
+        labelId="select-server"
         onChange={handleRegionChange}
         value={server ? server : ""}
         MenuProps={{

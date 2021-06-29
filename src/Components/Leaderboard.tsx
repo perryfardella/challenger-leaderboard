@@ -2,9 +2,7 @@ import React, { useState, useEffect, Dispatch } from "react";
 import { apiKey } from "../api-key/API.key";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
-import { ServerActions } from "../redux/actions/serverActions";
 import { DataLoadingActions } from "../redux/actions/dataLoadingActions";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableHead,
@@ -14,13 +12,6 @@ import {
   TableBody,
   Typography,
 } from "@material-ui/core";
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-    width: "50%",
-  },
-});
 
 interface LeagueData {
   tier: string;
@@ -44,9 +35,8 @@ interface SummonerData {
 }
 
 function Leaderboard() {
-  const classes = useStyles();
-
   const { server } = useSelector((state: AppState) => state.server);
+  const { filter } = useSelector((state: AppState) => state.filter);
   const dataLoadingDispatch = useDispatch<Dispatch<DataLoadingActions>>();
   const [leagueInfo, setLeagueInfo] = useState<LeagueData | undefined>(
     undefined
@@ -64,12 +54,20 @@ function Leaderboard() {
     if (server) {
       fetchPlayerInfo();
       summonerRanking = 0;
+      // sortSummonerData(filter ? filter : "rank");
     }
   }, [server]);
 
+  // If the filter is changed, re-sort the data
+  useEffect(() => {
+    if (filter) {
+      sortSummonerData(filter ? filter : "rank");
+    }
+  }, [filter]);
+
   useEffect(() => {
     if (leagueInfo) {
-      isolateSummonerData();
+      sortSummonerData(filter ? filter : "rank");
     }
   }, [leagueInfo]);
 
@@ -101,11 +99,21 @@ function Leaderboard() {
     }
   }
 
-  function isolateSummonerData() {
+  function sortSummonerData(filter: string = "rank") {
     const data = leagueInfo!.entries;
-    data.sort(function (a, b) {
-      return b.leaguePoints - a.leaguePoints;
-    });
+    console.log(filter);
+
+    if (filter === "rank") {
+      console.log("sorting by rank");
+      data.sort(function (a, b) {
+        return b.leaguePoints - a.leaguePoints;
+      });
+      console.log(data);
+    } else {
+      console.log("sorting by name");
+      data.sort((a, b) => a.summonerName.localeCompare(b.summonerName));
+      console.log(data);
+    }
 
     setSummonerInfo(data);
   }
