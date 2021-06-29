@@ -12,8 +12,14 @@ function MainPage() {
     <div>
       <ServerSelector />
       <FilterSelector />
-      {dataLoading ? <CircularProgress /> : ""}
       <Leaderboard />
+      {dataLoading && (
+        <CircularProgress
+          style={{
+            margin: 24,
+          }}
+        />
+      )}
     </div>
   );
 }

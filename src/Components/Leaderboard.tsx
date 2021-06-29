@@ -37,6 +37,7 @@ interface SummonerData {
 function Leaderboard() {
   const { server } = useSelector((state: AppState) => state.server);
   const { filter } = useSelector((state: AppState) => state.filter);
+  const { dataLoading } = useSelector((state: AppState) => state.dataLoading);
   const dataLoadingDispatch = useDispatch<Dispatch<DataLoadingActions>>();
   const [leagueInfo, setLeagueInfo] = useState<LeagueData | undefined>(
     undefined
@@ -61,7 +62,9 @@ function Leaderboard() {
   // If the filter is changed, re-sort the data
   useEffect(() => {
     if (filter) {
-      sortSummonerData(filter ? filter : "rank");
+      if (leagueInfo) {
+        sortSummonerData(filter ? filter : "rank");
+      }
     }
   }, [filter]);
 
@@ -135,7 +138,7 @@ function Leaderboard() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {summonerInfo
+          {summonerInfo && !dataLoading
             ? summonerInfo.map((x) => {
                 summonerRanking++;
                 return (
