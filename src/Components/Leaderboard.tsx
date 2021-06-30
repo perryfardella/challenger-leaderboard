@@ -39,7 +39,7 @@ function Leaderboard() {
             ? leagueInfo.entries.map((x) => {
                 summonerRanking++;
                 return (
-                  <TableRow>
+                  <TableRow hover>
                     <TableCell>
                       <Typography variant="body1">{summonerRanking}</Typography>
                     </TableCell>
