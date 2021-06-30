@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Drawer, List, ListItem, ListItemText } from "@material-ui/core";
 
 const menuItems = [
-  { label: "leaderboard", url: "/leaderboard" },
+  { label: "Leaderboard", url: "/leaderboard" },
   { label: "Match History", url: "/match-history" },
   { label: "Server Status", url: "/server-status" },
 ];
