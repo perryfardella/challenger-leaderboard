@@ -13,7 +13,9 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <AppBar />
-        <BodyContent />
+        <BodyContent>
+          <Routes />
+        </BodyContent>
       </BrowserRouter>
     </ThemeProvider>
   );

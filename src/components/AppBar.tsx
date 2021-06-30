@@ -12,9 +12,9 @@ export default function AppBar() {
   return (
     <MuiAppBar color="primary" position="sticky">
       <Toolbar>
-        <IconButton edge="start" aria-label="menu">
+        {/* <IconButton edge="start" aria-label="menu">
           <MenuRounded />
-        </IconButton>
+        </IconButton> */}
         <Typography variant="h6">Challenger Leaderboard</Typography>
       </Toolbar>
     </MuiAppBar>
