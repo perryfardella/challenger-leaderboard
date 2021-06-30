@@ -26,12 +26,13 @@ function ServerSelector() {
   const leagueInfoDispatch = useDispatch<Dispatch<LeagueInfoActions>>();
   const { dataLoading } = useSelector((state: AppState) => state.dataLoading);
   const dataLoadingDispatch = useDispatch<Dispatch<DataLoadingActions>>();
+  const { leagueInfo } = useSelector((state: AppState) => state.leagueInfo);
   const classes = useStyles();
 
-  async function fetchPlayerInfo() {
+  async function fetchPlayerInfo(newServer: string) {
     //setBadRequest(false);
     dataLoadingDispatch({ type: "SET_TRUE" });
-    const link: string = "/" + server;
+    const link: string = "/" + newServer;
     try {
       const response = await fetch(link, {
         headers: {
@@ -48,19 +49,21 @@ function ServerSelector() {
       console.log(data);
       //setLeagueInfo(data);
       leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: data });
+      console.log(leagueInfo);
       dataLoadingDispatch({ type: "SET_FALSE" });
     } catch (error) {
       console.log(error);
       //setBadRequest(true);
       //setLeagueInfo(undefined);
       //leagueInfoDispatch({}); NEED TO FIX
+      console.log(leagueInfo);
       dataLoadingDispatch({ type: "SET_FALSE" });
     }
   }
 
   const handleRegionChange = (e: any) => {
     serverDispatch({ type: "SET_SERVER", payload: e.target.value });
-    fetchPlayerInfo();
+    fetchPlayerInfo(e.target.value);
   };
 
   return (
