@@ -31,7 +31,6 @@ function ServerSelector() {
   const { leagueInfo } = useSelector((state: AppState) => state.leagueInfo);
   const leagueInfoDispatch = useDispatch<Dispatch<LeagueInfoActions>>();
   const classes = useStyles();
-  let dataFromAPI: LeagueData;
 
   async function fetchPlayerInfo(newServer: string) {
     //setBadRequest(false);
@@ -49,7 +48,7 @@ function ServerSelector() {
           "X-Riot-Token": apiKey,
         },
       });
-      const dataFromAPI = await response.json();
+      const dataFromAPI: LeagueData = await response.json();
       console.log(dataFromAPI);
       //setLeagueInfo(data);
       //leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: data });
@@ -64,6 +63,39 @@ function ServerSelector() {
       dataLoadingDispatch({ type: "SET_FALSE" });
     }
   }
+
+  // Need to add new proxies for making server status requests to the API
+  // async function fetchServerInfo(newServer: string) {
+  //   //setBadRequest(false);
+  //   dataLoadingDispatch({ type: "SET_TRUE" });
+  //   const link: string = "/" + newServer;
+  //   try {
+  //     const response = await fetch(link, {
+  //       headers: {
+  //         "User-Agent":
+  //           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+  //         "Accept-Language":
+  //           "en-AU,en;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-GB;q=0.6,en-US;q=0.5",
+  //         "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
+  //         Origin: "https://developer.riotgames.com",
+  //         "X-Riot-Token": apiKey,
+  //       },
+  //     });
+  //     const dataFromAPI = await response.json();
+  //     console.log(dataFromAPI);
+  //     //setLeagueInfo(data);
+  //     //leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: data });
+  //     let sortedData = sortSummonerData(dataFromAPI, filter);
+  //     leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: sortedData });
+  //     dataLoadingDispatch({ type: "SET_FALSE" });
+  //   } catch (error) {
+  //     console.log(error);
+  //     //setBadRequest(true);
+  //     //setLeagueInfo(undefined);
+  //     //leagueInfoDispatch({}); NEED TO FIX
+  //     dataLoadingDispatch({ type: "SET_FALSE" });
+  //   }
+  // }
 
   function sortSummonerData(data: LeagueData, filter: string = "rank") {
     console.log(filter);
