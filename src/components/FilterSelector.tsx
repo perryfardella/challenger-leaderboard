@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Dispatch } from "react";
+import React, { Dispatch } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
 import { FilterActions } from "../redux/actions/filterActions";

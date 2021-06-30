@@ -1,7 +1,6 @@
-import React, { useState, useEffect, Dispatch } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { AppState } from "../redux/reducers/rootReducer";
-import { DataLoadingActions } from "../redux/actions/dataLoadingActions";
 import {
   Table,
   TableHead,

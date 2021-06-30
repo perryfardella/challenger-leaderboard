@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Divider, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import MainPage from "./MainPage";
 
 const useStyles = makeStyles(() => ({
@@ -11,12 +11,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function BodyContent() {
+export default function BodyContent({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const classes = useStyles();
 
   return (
     <main className={classes.root}>
-      <MainPage />
+      {children}
+      {/* <MainPage /> */}
     </main>
   );
 }

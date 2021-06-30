@@ -1,6 +1,7 @@
 import React from "react";
-import Mainpage from "./components/MainPage";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./Routes";
 import Theme from "./Theme";
 import "./App.css";
 import AppBar from "./components/AppBar";
@@ -10,8 +11,10 @@ function App() {
   return (
     <ThemeProvider theme={Theme}>
       <CssBaseline />
-      <AppBar />
-      <BodyContent />
+      <BrowserRouter>
+        <AppBar />
+        <BodyContent />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
