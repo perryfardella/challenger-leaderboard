@@ -11,7 +11,6 @@ import {
   TableBody,
   Typography,
 } from "@material-ui/core";
-import { SummonerData } from "../interfaces";
 
 function Leaderboard() {
   const { leagueInfo } = useSelector((state: AppState) => state.leagueInfo);

@@ -7,6 +7,7 @@ import { LeagueInfoActions } from "../redux/actions/leagueInfoActions";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { apiKey } from "../api-key/API.key";
+import { LeagueData, SummonerData } from "../interfaces";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,12 +23,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function ServerSelector() {
   const { server } = useSelector((state: AppState) => state.server);
+  const { filter } = useSelector((state: AppState) => state.filter);
   const serverDispatch = useDispatch<Dispatch<ServerActions>>();
-  const leagueInfoDispatch = useDispatch<Dispatch<LeagueInfoActions>>();
+
   const { dataLoading } = useSelector((state: AppState) => state.dataLoading);
   const dataLoadingDispatch = useDispatch<Dispatch<DataLoadingActions>>();
   const { leagueInfo } = useSelector((state: AppState) => state.leagueInfo);
+  const leagueInfoDispatch = useDispatch<Dispatch<LeagueInfoActions>>();
   const classes = useStyles();
+  let dataFromAPI: LeagueData;
 
   async function fetchPlayerInfo(newServer: string) {
     //setBadRequest(false);
@@ -45,20 +49,40 @@ function ServerSelector() {
           "X-Riot-Token": apiKey,
         },
       });
-      const data = await response.json();
-      console.log(data);
+      const dataFromAPI = await response.json();
+      console.log(dataFromAPI);
       //setLeagueInfo(data);
-      leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: data });
-      console.log(leagueInfo);
+      //leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: data });
+      let sortedData = sortSummonerData(dataFromAPI, filter);
+      leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: sortedData });
       dataLoadingDispatch({ type: "SET_FALSE" });
     } catch (error) {
       console.log(error);
       //setBadRequest(true);
       //setLeagueInfo(undefined);
       //leagueInfoDispatch({}); NEED TO FIX
-      console.log(leagueInfo);
       dataLoadingDispatch({ type: "SET_FALSE" });
     }
+  }
+
+  function sortSummonerData(data: LeagueData, filter: string = "rank") {
+    console.log(filter);
+
+    if (filter === "rank") {
+      console.log("sorting by rank");
+      data.entries.sort(function (a: SummonerData, b: SummonerData) {
+        return b.leaguePoints - a.leaguePoints;
+      });
+      console.log(data);
+    } else {
+      console.log("sorting by name");
+      data.entries.sort((a: SummonerData, b: SummonerData) =>
+        a.summonerName.localeCompare(b.summonerName)
+      );
+      console.log(data);
+    }
+
+    return data;
   }
 
   const handleRegionChange = (e: any) => {

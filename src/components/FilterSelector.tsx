@@ -4,6 +4,8 @@ import { AppState } from "../redux/reducers/rootReducer";
 import { FilterActions } from "../redux/actions/filterActions";
 import { Select, MenuItem, InputLabel, FormControl } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { LeagueData, SummonerData } from "../interfaces";
+import { LeagueInfoActions } from "../redux/actions/leagueInfoActions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,31 +22,34 @@ const useStyles = makeStyles((theme: Theme) =>
 function FilterSelector() {
   const { filter } = useSelector((state: AppState) => state.filter);
   const filterDispatch = useDispatch<Dispatch<FilterActions>>();
+  const { leagueInfo } = useSelector((state: AppState) => state.leagueInfo);
+  const leagueInfoDispatch = useDispatch<Dispatch<LeagueInfoActions>>();
   const classes = useStyles();
 
-  // function sortSummonerData(filter: string = "rank") {
-  //   const data = leagueInfo!.entries;
-  //   console.log(filter);
+  function sortSummonerData(data: LeagueData, filter: string = "rank") {
+    console.log(filter);
 
-  //   if (filter === "rank") {
-  //     console.log("sorting by rank");
-  //     data.sort(function (a: SummonerData, b: SummonerData) {
-  //       return b.leaguePoints - a.leaguePoints;
-  //     });
-  //     console.log(data);
-  //   } else {
-  //     console.log("sorting by name");
-  //     data.sort((a: SummonerData, b: SummonerData) =>
-  //       a.summonerName.localeCompare(b.summonerName)
-  //     );
-  //     console.log(data);
-  //   }
+    if (filter === "rank") {
+      console.log("sorting by rank");
+      data.entries.sort(function (a: SummonerData, b: SummonerData) {
+        return b.leaguePoints - a.leaguePoints;
+      });
+      console.log(data);
+    } else {
+      console.log("sorting by name");
+      data.entries.sort((a: SummonerData, b: SummonerData) =>
+        a.summonerName.localeCompare(b.summonerName)
+      );
+      console.log(data);
+    }
 
-  //   setSummonerInfo(data);
-  // }
+    return data;
+  }
 
   const handleFilterChange = (e: any) => {
     filterDispatch({ type: "SET_FILTER", payload: e.target.value });
+    let sortedData = sortSummonerData(leagueInfo, e.target.value);
+    leagueInfoDispatch({ type: "SET_LEAGUEINFO", payload: sortedData });
   };
 
   return (
